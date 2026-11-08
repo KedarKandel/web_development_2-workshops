@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const postSchema = new mongoose.Schema(
   {
@@ -7,11 +7,27 @@ const postSchema = new mongoose.Schema(
     // - title: String, required, trim
     // - content: String, required, trim
     // - author: String, required, trim
+
+    title: {
+      type: String,
+      required: [true, "Title is required"],
+      trim: true,
+    },
+    content: {
+      type: String,
+      required: [true, "Content is required"],
+      trim: true,
+    },
+    author: {
+      type: String,
+      required: [true, "Author is required"],
+      trim: true,
+    },
   },
   {
     // TODO (student): Keep timestamps enabled (or decide based on requirements).
-    timestamps: true
-  }
+    timestamps: true,
+  },
 );
 
-module.exports = mongoose.model('Post', postSchema);
+module.exports = mongoose.model("Post", postSchema);
