@@ -96,6 +96,11 @@ router.put("/:id", async (req, res) => {
       .json({ message: "Post updated successfully", updatedPost });
   } catch (error) {
     console.error(error.stack);
+    if (error.name === "ValidationError") {
+      return res.status(400).json({
+        message: error.message,
+      });
+    }
     return res.status(500).json({ message: "Internal server error" });
   }
 });
