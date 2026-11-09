@@ -15,6 +15,12 @@ router.post("/", async (req, res) => {
   // TODO: Return the created post with status code 201.
   try {
     const { title, content, author } = req.body;
+    // Check for missing or empty values
+    if (!title?.trim() || !content?.trim() || !author?.trim()) {
+      return res.status(400).json({
+        message: "All fields (title, content, author) are required.",
+      });
+    }
     const post = new Post({ title, content, author });
     const savedPost = await post.save();
     return res.status(201).json({
@@ -46,8 +52,8 @@ router.get("/:id", async (req, res) => {
   // TODO: Find one post by id.
   // TODO: Return 404 if the post is not found.
   const { id } = req.params;
-  console.log(id)
-  
+  console.log(id);
+
   if (!isValidObjectId(id)) {
     return res.status(400).json({ error: "Invalid post id" });
   }
@@ -81,10 +87,10 @@ router.put("/:id", async (req, res) => {
       { title, content, author },
       { new: true, runValidators: true },
     );
-    if (!updatedPost){
+    if (!updatedPost) {
       return res.status(404).json({ message: "Post not found." });
     }
-      
+
     return res
       .status(200)
       .json({ message: "Post updated successfully", updatedPost });
@@ -104,10 +110,10 @@ router.delete("/:id", async (req, res) => {
   }
   try {
     const deletedPost = await Post.findByIdAndDelete(id);
-    if (!deletedPost){
+    if (!deletedPost) {
       return res.status(404).json({ message: "Post not found" });
     }
-      
+
     return res.status(200).json({ message: "Post deleted successfully" });
   } catch (error) {
     console.error(error.stack);
