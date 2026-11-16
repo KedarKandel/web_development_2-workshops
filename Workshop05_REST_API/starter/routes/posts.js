@@ -124,7 +124,7 @@ router.delete("/:id", async (req, res) => {
     console.error(error.stack);
     return res
       .status(501)
-      .json({ message: "TODO: implement DELETE /api/posts/:id" });
+      .json({ message: "server error" });
   }
 });
 
