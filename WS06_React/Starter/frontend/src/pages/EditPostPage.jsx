@@ -46,7 +46,7 @@ function EditPostPage() {
       content: formData.get("content"),
     };
 
-    console.log("Submitting updated post data:", updatePostData);
+    //console.log("Submitting updated post data:", updatePostData);
 
     try {
       const response = await fetch(`/api/posts/${id}`, {
@@ -57,16 +57,12 @@ function EditPostPage() {
         body: JSON.stringify(updatePostData),
       });
 
-      console.log("Response status:", response.status);
-
+      // console.log("Response status:", response.status);
       if (!response.ok) {
         setError(`Failed to update post. Status: ${response.status}`);
         setSubmitting(false);
         return;
       }
-
-     
-
       const updatedPost = await response.json();
       const newId = updatedPost.updatedPost._id ?? updatedPost.id;
       navigate(`/posts/${newId}`);
