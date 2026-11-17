@@ -25,7 +25,7 @@ function NewPostPage() {
       content: formData.get('content'),
     }
     try {
-      const response = await fetch('/api/posts', {
+      const response = await fetch(`/api/posts`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -36,9 +36,9 @@ function NewPostPage() {
         throw new Error(`HTTP error! status: ${response.status}`)
       }
       const createdPost = await response.json()
-      console.log('Created post:', createdPost)
-
-      await navigate(`/posts/${createdPost._id}`)
+      // console.log('Created post:', createdPost)
+      const newId = createdPost.saved._id ?? createdPost.saved.id
+      await navigate(`/posts/${newId}`)
     } catch (err) {
       setError(err.message)
     } finally {

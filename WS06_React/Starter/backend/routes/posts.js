@@ -10,13 +10,11 @@ function isValidObjectId(id) {
 }
 
 router.post("/", async (req, res) => {
-  console.log(req.body)
+  // console.log(req.body)
   try {
     const post = new Post(req.body);
-    console.log(post)
     const saved = await post.save();
-   console.log(saved)
-    return res.status(201).json(saved);
+    return res.status(201).json({message:"New post created!", saved});
   } catch (error) {
     if (error.name === "ValidationError") {
       return res.status(400).json({ error: error.message });
@@ -69,7 +67,7 @@ router.put("/:id", async (req, res) => {
       return res.status(404).json({ message: "Post not found." });
     }
     return res
-      .status(501)
+      .status(200)
       .json({ message: "Post updated successfully", updatedPost });
   } catch (error) {
     console.error(error.stack);
@@ -93,7 +91,7 @@ router.delete("/:id", async (req, res) => {
     if (!deletedPost) {
       return res.status(404).json({ message: "Post not found" });
     }
-    return res.status(200).json({message:"Post deleted successfully."});
+    return res.status(200).json({ message: "Post deleted successfully." });
   } catch (error) {
     console.error(error);
   }
